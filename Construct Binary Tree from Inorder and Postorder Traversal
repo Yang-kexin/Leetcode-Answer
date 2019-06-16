@@ -1,0 +1,18 @@
+class Solution(object):
+    def buildTree(self, inorder, postorder):
+        ind_map = {value:index for index, value in enumerate(inorder)}
+
+        #print(ind_map)
+        def build(left_ind, right_ind):
+            if left_ind> right_ind:
+                return None
+            
+            val = postorder.pop()
+            root = TreeNode(val)
+            ind = ind_map[val]
+            #print(ind)
+            root.right = build(ind+1, right_ind)
+            root.left = build(left_ind, ind-1)
+            return root
+        
+        return build(0,len(inorder)-1)
