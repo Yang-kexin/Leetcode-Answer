@@ -1,0 +1,15 @@
+class Solution(object):
+    def preorder(self, root):
+        """
+        :type root: Node
+        :rtype: List[int]
+        """
+        output = []
+        if root is None: return output
+        stack = [root]
+        
+        while stack:
+            root = stack.pop()
+            output.append(root.val)
+            stack.extend(root.children[::-1])
+        return output
