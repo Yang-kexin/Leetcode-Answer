@@ -1,0 +1,27 @@
+class Solution(object):
+    def wallsAndGates(self, rooms):
+        """
+        :type rooms: List[List[int]]
+        :rtype: None Do not return anything, modify rooms in-place instead.
+        """
+        m = len(rooms)
+        if m==0: return 
+        n = len(rooms[0])
+        q = []
+        for i in range(m):
+            for j in range(n):
+                if rooms[i][j]==0:
+                    q.append((i,j))
+        
+        dirs = [(0,-1), (0,1), (1,0), (-1,0)]
+        #print(q)
+        while q:
+            x, y = q.pop(0)
+            for dx, dy in dirs:
+                new_x, new_y = x+dx, y+dy
+                #print(new_x, new_y)
+                if new_x>=0 and new_y>=0 and new_x<m and new_y<n:
+                    if rooms[new_x][new_y]>rooms[x][y]+1:
+                        rooms[new_x][new_y] = rooms[x][y]+1
+                        q.append((new_x, new_y))
+        return
