@@ -1,0 +1,25 @@
+from collections import deque
+class Solution(object):
+    def levelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        ans = []
+        if root is None: return ans
+        level = 0
+        Q = deque([root])
+        
+        while Q:
+            ans.append([])
+            length = len(Q)
+            for i in range(length):
+                node = Q.popleft()
+                ans[level].append(node.val)
+                if node.left:
+                    Q.append(node.left)
+                if node.right:
+                    Q.append(node.right)
+            level+=1
+        return ans
+                
