@@ -1,0 +1,36 @@
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val, left, right):
+        self.val = val
+        self.left = left
+        self.right = right
+"""
+class Solution:
+    def treeToDoublyList(self, root: 'Node') -> 'Node':
+        if not root: return None
+        head, tail = self.helper(root)
+        head.left = tail
+        tail.right = head
+        return head
+        
+    
+    def helper(self, root):
+        if not root: return None, None
+        
+        left_head, left_tail = self.helper(root.left)
+        right_head, right_tail = self.helper(root.right)
+        
+        if left_head: 
+            left_tail.right = root
+            root.left = left_tail
+        else:
+            left_head = root
+        
+        if right_head:
+            right_head.left = root
+            root.right = right_head
+        else:
+            right_tail = root
+            
+        return left_head, right_tail
