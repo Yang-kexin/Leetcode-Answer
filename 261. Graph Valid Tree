@@ -1,0 +1,30 @@
+# if number of edges != n-1, where there is a circle, there is not connected edge
+
+class Solution:
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        if len(edges)!=(n-1):
+            return False
+        neighbor = collections.defaultdict(list)
+        for edge in edges:
+            neighbor[edge[0]].append(edge[1])
+            neighbor[edge[1]].append(edge[0])
+        print(neighbor)
+        
+        visited = set()
+        # visited[0] = True
+        
+
+        visited.add(0)
+        queue = [0]
+        while queue:
+            curr = queue.pop(0)
+            visited.add(curr)
+            for item in neighbor[curr]:
+                if item not in visited:
+                    visited.add(item)
+                    queue.append(item)
+
+        return len(visited) == n
+        
+        
+        
