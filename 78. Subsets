@@ -1,0 +1,14 @@
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        combinations = []
+        self.backtracking(nums, 0, combinations, [])
+        return combinations
+        
+    def backtracking(self, nums, starIndex, combinations, subset):
+        combinations.append(list(subset))
+        
+        for i in range(starIndex, len(nums)):
+            subset.append(nums[i])
+            self.backtracking(nums, i+1, combinations, subset)
+            subset.pop()
