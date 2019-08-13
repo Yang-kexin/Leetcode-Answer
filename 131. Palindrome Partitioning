@@ -1,0 +1,25 @@
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        resultList = []
+        self.backtracking(s, 0, [], resultList)
+        return resultList
+        
+    def backtracking(self, s, starIndex, result, resultList):
+        if starIndex == len(s):
+            resultList.append(list(result))
+            return
+            
+        for i in range(starIndex, len(s)):
+            substring = s[starIndex:i+1]
+            if self.isPanlindrome(substring)==False: 
+                continue            
+            result.append(substring)
+            self.backtracking(s, i+1, result, resultList)
+            result.pop()
+    
+    def isPanlindrome(self, s):
+        if len(s)==0: return False
+        for i in range(len(s)//2):
+            j = len(s) - i - 1
+            if s[i]!=s[j]: return False            
+        return True
