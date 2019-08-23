@@ -1,0 +1,23 @@
+class Solution(object):
+    def triangleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # three edges a<=b<=c
+        # a + b > c
+        if len(nums)<3: return 0
+        nums.sort(reverse = True)
+        n = len(nums)
+        count = 0
+        for c in range(n-2):
+            b = c + 1
+            a = n - 1
+            while b < a:
+                if nums[a] + nums[b] <= nums[c]:
+                    a -= 1
+                else:
+                    count += a-b
+                    b += 1
+                    
+        return count
