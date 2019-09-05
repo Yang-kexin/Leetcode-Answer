@@ -1,0 +1,23 @@
+class Solution:
+    def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:
+        for c in paragraph:
+            if c in "!?',;.":
+                paragraph = paragraph.replace(c, ' ')
+        banset = set(banned)
+        list = paragraph.lower().split(' ')
+        dic = {}
+        for word in list:
+            if word.isalpha():
+                if word in dic:
+                    dic[word] += 1
+                else:
+                    dic[word] = 1
+                    
+        count = 0
+        char = ''
+        for element in dic:
+            if dic[element] > count and element not in banset:
+                count = dic[element]
+                char = element
+                
+        return char
