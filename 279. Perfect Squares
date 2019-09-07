@@ -13,3 +13,26 @@ class Solution:
                 
         return dp[n]
             
+from collections import deque
+class Solution:
+    def numSquares(self, n: int) -> int:
+        sqs = []
+        for i in range(1, int(n**0.5+1)):
+            sqs.append(i**2)
+            
+        queue = deque([n])
+        ans = 0
+        while queue:
+            ans += 1
+            length = len(queue)
+            for _ in range(length):
+                num = queue.popleft()
+                for sq in sqs:
+                    if num - sq == 0:
+                        return ans
+                    if num - sq < 0:
+                        break
+                    queue.append(num - sq)
+                
+        return ans
+        
