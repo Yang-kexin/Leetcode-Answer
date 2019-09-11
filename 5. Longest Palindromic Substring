@@ -1,0 +1,29 @@
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        dict1={}
+        if len(s)<=1:
+            return s
+        for i in range(len(s)-1):
+            len1=self.subarrayexpand(s,i,i)
+            len2=self.subarrayexpand(s,i,i+1)
+            #print(i,max(len1,len2))
+            dict1[max(len1,len2)]=i
+        length = max(dict1)
+        indicator = dict1[length]
+        if length%2==1:
+            leftmost = indicator-length//2
+            rightmost = indicator+length//2+1
+        else:
+            leftmost = indicator-length//2+1
+            rightmost = indicator+length//2+1
+        return s[leftmost:rightmost]
+    
+    def subarrayexpand(self,s,left,right):
+        while left>=0 and right<len(s) and s[left]==s[right]:
+            left -= 1
+            right += 1
+        return right-left-1
