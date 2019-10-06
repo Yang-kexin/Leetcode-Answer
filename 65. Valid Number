@@ -1,0 +1,30 @@
+class Solution:
+    def isNumber(self, s: str) -> bool:
+        # write your code here
+        if not s: return False
+        s = s.strip()
+        if len(s) == 0: return False
+        s = s + ' '
+        i = 0
+        if s[i] == '+' or s[i] == '-':
+            i += 1
+        nDigit = 0
+        nPoint = 0
+        while s[i].isdigit() or s[i] == '.':
+            if s[i].isdigit():
+                nDigit += 1
+            if s[i] == '.':
+                nPoint += 1
+            i += 1
+        if nDigit <=0 or nPoint >1: return False
+        
+        if s[i] == 'e': 
+            i += 1
+            if s[i] == '+' or s[i] == '-': i +=1
+                
+            if i == len(s)-1: return False
+        for j in range(i, len(s)-1):
+            i += 1
+            if not s[j].isdigit(): return False
+        
+        return i == len(s)-1
