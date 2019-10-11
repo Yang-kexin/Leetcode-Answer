@@ -1,0 +1,18 @@
+class Solution:
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+        taskList = [0] * 26
+        for task in tasks:
+            taskList[ord(task)-ord('A')] += 1
+            
+        taskList.sort(reverse = True)
+        count = 0
+        while taskList[0]:           
+            for i in range(n+1):
+                if taskList[0] == 0:
+                    break
+                if i < 26 and taskList[i]!=0:
+                    taskList[i] -= 1
+                count += 1
+            taskList.sort(reverse = True)
+                
+        return count
