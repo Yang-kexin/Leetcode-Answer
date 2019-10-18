@@ -1,0 +1,35 @@
+class Solution(object):
+    def ladderLength(self, beginWord, endWord, wordList):
+        """
+        :type beginWord: str
+        :type endWord: str
+        :type wordList: List[str]
+        :rtype: int
+        """
+        hashmap = collections.defaultdict(list)
+        
+        for word in wordList:
+            for i in range(len(word)):
+                hashmap[word[:i]+'*'+word[i+1:]].append(word)
+                
+        step = 0
+        q = []
+        q.append([beginWord, 1])
+        visited = set()
+        visited.add(beginWord)
+        while q:
+            curr, level = q.pop(0)
+            level += 1
+            for i in range(len(curr)):
+                intermediate = curr[:i]+'*'+curr[i+1:]
+                for item in hashmap[intermediate]:
+                    if endWord == item:
+                        return level
+                    if item not in visited:
+                        q.append([item, level])
+                        visited.add(item)
+                hashmap[intermediate] = []
+                
+        return 0
+                    
+            
