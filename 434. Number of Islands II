@@ -1,0 +1,54 @@
+"""
+Definition for a point.
+class Point:
+    def __init__(self, a=0, b=0):
+        self.x = a
+        self.y = b
+"""
+
+class Solution:
+    """
+    @param n: An integer
+    @param m: An integer
+    @param operators: an array of point
+    @return: an integer array
+    """
+    def numIslands2(self, n, m, operators):
+        # write your code here
+        
+        self.parent = {} # point(tuple) -> father point (tuple)
+        visited = set()
+        result = []
+        for operator in operators:
+            self.parent[(operator.x, operator.y)] = (operator.x, operator.y)
+        self.count = 0
+        dxdy = [[1,0],[0,1],[-1,0],[0,-1]]
+        for op in operators:
+            self.count += 1
+            if (op.x, op.y) in visited:
+                self.count -= 1
+            visited.add((op.x, op.y))
+            for dx, dy in dxdy:
+                newop_x, newop_y = op.x + dx, op.y + dy
+                # if (newop_x, newop_y) in self.parent:
+                if (newop_x, newop_y) in visited:
+                    self.union((op.x, op.y), (newop_x, newop_y))
+                    # else:
+                    #     visited.add((newop_x, newop_y))
+            result.append(self.count)
+        return result
+    
+    def union(self, pointA, pointB):
+        rootA = self.find(pointA)
+        rootB = self.find(pointB)
+        if rootA != rootB:
+            # print('here')
+            self.parent[rootA] = rootB
+            self.count -= 1
+        else: return
+    
+    def find(self, point):
+        root = point
+        while self.parent[root]!=root:
+            root = self.parent[root]
+        return root
