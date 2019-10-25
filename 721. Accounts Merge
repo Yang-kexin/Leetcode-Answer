@@ -1,0 +1,50 @@
+class Solution:
+    def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
+        mapEmailID = collections.defaultdict(list)
+        nameList = []
+        for idx, nameAccount in enumerate(accounts):
+            nameList.append(nameAccount[0])
+            for email in nameAccount[1:]:
+                mapEmailID[email].append(idx)
+        # print(mapEmailID)
+        n = len(nameList)
+        self.parent = {}
+        for i in range(n):
+            self.parent[i] = i
+            
+        for email in mapEmailID:
+            IDlist = mapEmailID[email]
+            for i in range(1, len(IDlist)):
+                self.union(IDlist[0], IDlist[i])
+                print(IDlist[0], IDlist[i])        
+        temp = collections.defaultdict(list)
+        for i, root in enumerate(self.parent):
+            root = self.find(root)
+            temp[root].append(i)
+        
+        ans = []
+        for root in temp:
+            name = nameList[root]
+            emaillist = set()
+            for emailidx in temp[root]:
+                for email in accounts[emailidx][1:]:
+                    emaillist.add(email)
+            emaillist = list(emaillist)
+            emaillist.sort()
+            # print([name], )
+            ans.append([name] + emaillist)
+        return ans
+    
+    def union(self, id1, id2):
+        self.parent[self.find(id1)] = self.find(id2)
+
+    def find(self, user_id):
+        path = []
+        while user_id != self.parent[user_id]:
+            path.append(user_id)
+            user_id = self.parent[user_id]
+           
+        for u in path:
+            self.parent[u] = user_id
+        # print(path, user_id)     
+        return user_id
